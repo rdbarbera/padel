@@ -14,49 +14,65 @@ function MatchDetail() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [winner, setWinner] = useState(null);
-  const [elapsedTime, setElapsedTime] = useState(0); // Contador de tiempo en segundos
+  const [elapsedTime, setElapsedTime] = useState(1201); // Contador de tiempo en segundos
+  const [startTime, setStartTime] = useState(null);
 
   const [equipo1, equipo2] = equipos.split(" vs ");
   const PUNTOS = ["0", "15", "30", "40", "Ventaja"];
 
-  useEffect(() => {
-    axios
-      .get(`https://padel-backend-one.vercel.app/api/partidos/${id}`)
-      .then((response) => {
-        setPoints({
-          team1: response.data.team1_points,
-          team2: response.data.team2_points,
-        });
-        setGames({
-          team1: response.data.team1_games,
-          team2: response.data.team2_games,
-        });
-        setHistory(response.data.history || []);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los datos:", error);
-        setLoading(false);
+  // En el useEffect para obtener los detalles del partido
+useEffect(() => {
+  axios
+    .get(`http://localhost:3001/api/partidos/${id}`)
+    .then((response) => {
+      setPoints({
+        team1: response.data.team1_points,
+        team2: response.data.team2_points,
       });
-  }, [id]);
+      setGames({
+        team1: response.data.team1_games,
+        team2: response.data.team2_games,
+      });
+      setHistory(response.data.history || []);
+      setStartTime(response.data.start_time ? new Date(response.data.start_time) : null); // Guardar la hora de inicio o null
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error al obtener los datos:", error);
+      setLoading(false);
+    });
+}, [id]);
 
-  //TODO: El tiempo tiene que inciarse y guardarse en la db por si se reinicia la pagina o abre alguien mas
-  
   // Contador de tiempo
   useEffect(() => {
     const timer = setInterval(() => {
-      setElapsedTime((prev) => prev + 1);
+      if (startTime) {
+        const currentTime = new Date();
+        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+        setElapsedTime(1200 - elapsedSeconds); // Calcular el tiempo restante
+      }
     }, 1000);
 
-    if (elapsedTime >= 12000 && !winner) {
+    if (startTime && elapsedTime <= 0 && !winner) {
       finalizarPartidoPorTiempo();
     }
 
     return () => clearInterval(timer);
-  }, [elapsedTime, winner]);
+  }, [startTime, elapsedTime, winner]);
+
+  // Inicializar el tiempo en el backend al iniciar el partido
+  const iniciarPartido = () => {
+    axios.post(`http://localhost:3001/api/partidos/${id}/iniciar`, {
+      start_time: new Date().toISOString(),
+    }).then(response => {
+      setStartTime(new Date(response.data.start_time)); // Guardar la hora de inicio
+    }).catch(error => {
+      console.error("Error al iniciar el partido:", error);
+    });
+  };
 
   const actualizarBackend = (updatedPoints, updatedGames, updatedHistory) => {
-    axios.put(`https://padel-backend-one.vercel.app/api/partidos/${id}`, {
+    axios.put(`http://localhost:3001/api/partidos/${id}`, {
       team1_name: equipo1,
       team2_name: equipo2,
       team1_points: updatedPoints.team1,
@@ -133,12 +149,31 @@ function MatchDetail() {
     } else if (games.team2 > games.team1) {
       ganador = equipo2;
     } else {
-      ganador = "Empate - decidir manualmente";
+      if (points.team1 > points.team2) {
+        ganador = equipo1;
+      } else if (points.team2 > points.team1) {
+        ganador = equipo2;
+      } else {
+        ganador = "Empate";
+      }
     }
 
     setWinner(ganador);
-    //TODO: Actualizar en backend quien gano el partido
-    alert(`¡Tiempo agotado! ${ganador} ha ganado el partido.`);
+    
+    // Llamar al método del servidor para actualizar el tiempo de finalización
+    axios.put(`http://localhost:3001/api/partidos/${id}/tiempo`)
+      .then(response => {
+        console.log(response.data.message);
+      })
+      .catch(error => {
+        console.error("Error al actualizar el tiempo de finalización:", error);
+      });
+
+    if (ganador === "Empate") {
+      alert("¡Tiempo agotado! El partido ha terminado en empate.");
+    } else {
+      alert(`¡Tiempo agotado! ${ganador} ha ganado el partido.`);
+    }
   };
 
   const formatTime = (seconds) => {
@@ -162,7 +197,7 @@ function MatchDetail() {
 
       <h1 className="match-title">Partido {id}</h1>
       <h2 className="team-names">{equipos}</h2>
-      <p className="time-counter">Tiempo: {formatTime(elapsedTime)}</p>
+      <p className="time-counter">Tiempo: {elapsedTime < 1201 ? formatTime(elapsedTime) : ""}</p>
 
       <div className="score-board">
         <div className="team">
@@ -174,6 +209,12 @@ function MatchDetail() {
           <p className="team-score">Puntos: {PUNTOS[points.team2]}</p>
         </div>
       </div>
+
+      {!winner && !startTime && (
+        <div className="button-group">
+          <button onClick={iniciarPartido}>Iniciar Partido</button>
+        </div>
+      )}
 
       {!winner && (
         <div className="button-group">

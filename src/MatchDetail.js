@@ -169,11 +169,7 @@ useEffect(() => {
         console.error("Error al actualizar el tiempo de finalización:", error);
       });
 
-    if (ganador === "Empate") {
-      alert("¡Tiempo agotado! El partido ha terminado en empate.");
-    } else {
-      alert(`¡Tiempo agotado! ${ganador} ha ganado el partido.`);
-    }
+    
   };
 
   const formatTime = (seconds) => {

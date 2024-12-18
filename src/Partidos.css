@@ -1,0 +1,209 @@
+.partidos-container {
+    width: 90%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .agregar-button {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .agregar-button:hover {
+    background-color: #218838;
+  }
+  
+  .partidos-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .partido-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .partido-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .partido-info h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .partido-info p {
+    margin: 5px 0;
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .edit-button,
+  .delete-button {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  .form-crear,
+  .form-edit {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .form-crear h4,
+  .form-edit h4 {
+    margin-top: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  label {
+    display: block;
+    margin-top: 10px;
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  select,
+  input {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .puntos-games {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .puntos-games div {
+    text-align: center;
+  }
+  
+  .puntos-games label {
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .increment-decrement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .increment-decrement button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .increment-decrement button:hover {
+    background-color: #218838;
+  }
+  
+  .increment-decrement span {
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .guardar-button {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .guardar-button:hover {
+    background-color: #218838;
+  }
+  
+  .cancelar-button {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .cancelar-button:hover {
+    background-color: #5a6268;
+  }
+  
+  .reset-time-button {
+    background-color: #ffc107;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .reset-time-button:hover {
+    background-color: #e0a800;
+  }
+  

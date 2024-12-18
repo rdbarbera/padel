@@ -1,0 +1,36 @@
+.hamburger-menu {
+  position: absolute; /* Asegura que el menú se ubique relativo al contenedor */
+  top: 10px; /* Espaciado desde la parte superior */
+  left: 10px; /* Espaciado desde el lado izquierdo */
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 40px; /* Ubicación debajo del botón hamburguesa */
+  left: 0; /* Alineación con el botón */
+  background: #34495e;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.menu-dropdown a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+.menu-dropdown a:hover {
+  background: #2ecc71;
+}

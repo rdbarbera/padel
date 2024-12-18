@@ -23,7 +23,7 @@ function MatchDetail() {
   // En el useEffect para obtener los detalles del partido
 useEffect(() => {
   axios
-    .get(`https://padel-backend-one.vercel.app/api/partidos/${id}`)
+    .get(`http://localhost:3001/api/partidos/${id}`)
     .then((response) => {
       setPoints({
         team1: response.data.team1_points,
@@ -62,7 +62,7 @@ useEffect(() => {
 
   // Inicializar el tiempo en el backend al iniciar el partido
   const iniciarPartido = () => {
-    axios.post(`https://padel-backend-one.vercel.app/api/partidos/${id}/iniciar`, {
+    axios.post(`http://localhost:3001/api/partidos/${id}/iniciar`, {
       start_time: new Date().toISOString(),
     }).then(response => {
       setStartTime(new Date(response.data.start_time)); // Guardar la hora de inicio
@@ -72,7 +72,7 @@ useEffect(() => {
   };
 
   const actualizarBackend = (updatedPoints, updatedGames, updatedHistory) => {
-    axios.put(`https://padel-backend-one.vercel.app/api/partidos/${id}`, {
+    axios.put(`http://localhost:3001/api/partidos/${id}`, {
       team1_name: equipo1,
       team2_name: equipo2,
       team1_points: updatedPoints.team1,
@@ -161,7 +161,7 @@ useEffect(() => {
     setWinner(ganador);
     
     // Llamar al método del servidor para actualizar el tiempo de finalización
-    axios.put(`https://padel-backend-one.vercel.app/api/partidos/${id}/tiempo`)
+    axios.put(`http://localhost:3001/api/partidos/${id}/tiempo`)
       .then(response => {
         console.log(response.data.message);
       })

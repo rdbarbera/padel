@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import HamburgerMenu from "./HamburgerMenu";
 import "./App.css";
 
 function Home() {
@@ -10,19 +11,20 @@ function Home() {
   useEffect(() => {
     // Obtener partidos con el ganador (si existe)
     axios
-      .get("https://padel-backend-one.vercel.app/api/partidos")
+      .get("http://localhost:3001/api/partidos")
       .then((response) => setPartidos(response.data))
       .catch((error) => console.error("Error al obtener los partidos:", error));
 
     // Obtener puntajes totales de los equipos
     axios
-      .get("https://padel-backend-one.vercel.app/api/equipos")
+      .get("http://localhost:3001/api/equipos")
       .then((response) => setPuntajesTotales(response.data))
       .catch((error) => console.error("Error al obtener puntajes:", error));
   }, []);
 
   return (
     <div className="app-container">
+      <HamburgerMenu />
       <h1>Mini Torneo</h1>
 
       {/* Mostrar puntajes totales */}
@@ -31,10 +33,10 @@ function Home() {
         {puntajesTotales
           .sort((a, b) => b.total_puntos - a.total_puntos) // Ordenar por puntajes de mayor a menor
           .map((equipo) => (
-          <p key={equipo.nombre}>
-            {equipo.nombre}: {equipo.total_puntos} puntos
-          </p>
-        ))}
+            <p key={equipo.nombre}>
+              {equipo.nombre}: {equipo.total_puntos} puntos
+            </p>
+          ))}
       </div>
 
       {/* Lista de partidos */}
@@ -49,7 +51,9 @@ function Home() {
 
             <Link
               to={`/detalle/${partido.id}`}
-              state={{ equipos: `${partido.team1_name} vs ${partido.team2_name}` }}
+              state={{
+                equipos: `${partido.team1_name} vs ${partido.team2_name}`,
+              }}
             >
               <button
                 className={`match-button ${

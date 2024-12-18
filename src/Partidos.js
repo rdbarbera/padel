@@ -22,12 +22,12 @@ function Partidos() {
   }, []);
 
   const fetchPartidos = async () => {
-    const res = await axios.get("http://localhost:3001/api/partidos");
+    const res = await axios.get("https://padel-backend-one.vercel.app/api/partidos");
     setPartidos(res.data);
   };
 
   const fetchEquipos = async () => {
-    const res = await axios.get("http://localhost:3001/api/equipos");
+    const res = await axios.get("https://padel-backend-one.vercel.app/api/equipos");
     setEquipos(res.data);
   };
 
@@ -36,14 +36,14 @@ function Partidos() {
       alert("Debes seleccionar ambos equipos");
       return;
     }
-    await axios.post("http://localhost:3001/api/partidos", nuevoPartido);
+    await axios.post("https://padel-backend-one.vercel.app/api/partidos", nuevoPartido);
     setFormCrear(false);
     setNuevoPartido({ team1_id: "", team2_id: "" });
     fetchPartidos();
   };
 
   const eliminarPartido = async (id) => {
-    await axios.delete(`http://localhost:3001/api/partidos/${id}`);
+    await axios.delete(`https://padel-backend-one.vercel.app/api/partidos/${id}`);
     fetchPartidos();
   };
 
@@ -62,7 +62,7 @@ function Partidos() {
       ...partidoEditado,
       ...(restablecerTiempo ? { start_time: null, end_time: null } : {}),
     };
-    await axios.put(`http://localhost:3001/api/partidos/${partidoEditado.id}`, data);
+    await axios.put(`https://padel-backend-one.vercel.app/api/partidos/${partidoEditado.id}`, data);
     setPartidoEditado(null);
     fetchPartidos();
   };

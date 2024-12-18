@@ -12,7 +12,7 @@ function Equipos() {
   // Función para obtener equipos del backend
   const fetchEquipos = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/equipos");
+      const response = await axios.get("https://padel-backend-one.vercel.app/api/equipos");
       setEquipos(response.data); // Actualizar el estado local
     } catch (error) {
       console.error("Error al obtener equipos:", error);
@@ -31,7 +31,7 @@ function Equipos() {
     }
 
     try {
-      await axios.post("http://localhost:3001/api/equipos", { nombre });
+      await axios.post("https://padel-backend-one.vercel.app/api/equipos", { nombre });
       fetchEquipos(); // Actualizar la lista
       setNombre(""); // Limpiar el input
     } catch (error) {
@@ -42,7 +42,7 @@ function Equipos() {
   // Eliminar un equipo
   const eliminarEquipo = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/equipos/${id}`);
+      await axios.delete(`https://padel-backend-one.vercel.app/api/equipos/${id}`);
       fetchEquipos(); // Actualizar la lista
     } catch (error) {
       console.error("Error al eliminar equipo:", error);
@@ -64,7 +64,7 @@ function Equipos() {
     }
 
     try {
-      await axios.put(`http://localhost:3001/api/equipos/${id}`, {
+      await axios.put(`https://padel-backend-one.vercel.app/api/equipos/${id}`, {
         nombre: nombreEditado,
         total_puntos: puntosEditados,
       });

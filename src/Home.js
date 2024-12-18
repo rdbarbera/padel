@@ -11,13 +11,13 @@ function Home() {
   useEffect(() => {
     // Obtener partidos con el ganador (si existe)
     axios
-      .get("http://localhost:3001/api/partidos")
+      .get("https://padel-backend-one.vercel.app/api/partidos")
       .then((response) => setPartidos(response.data))
       .catch((error) => console.error("Error al obtener los partidos:", error));
 
     // Obtener puntajes totales de los equipos
     axios
-      .get("http://localhost:3001/api/equipos")
+      .get("https://padel-backend-one.vercel.app/api/equipos")
       .then((response) => setPuntajesTotales(response.data))
       .catch((error) => console.error("Error al obtener puntajes:", error));
   }, []);

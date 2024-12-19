@@ -16,7 +16,8 @@ function MatchDetail() {
   const [winner, setWinner] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(1201); // Contador de tiempo en segundos
   const [startTime, setStartTime] = useState(null);
-
+  const [team1_id, setTeam1Id] = useState(null);
+  const [team2_id, setTeam2Id] = useState(null);
   const [equipo1, equipo2] = equipos.split(" vs ");
   const PUNTOS = ["0", "15", "30", "40", "Ventaja"];
 
@@ -33,6 +34,9 @@ useEffect(() => {
         team1: response.data.team1_games,
         team2: response.data.team2_games,
       });
+      setTeam1Id(response.data.team1_id);
+      setTeam2Id(response.data.team2_id);
+      
       setHistory(response.data.history || []);
       setStartTime(response.data.start_time ? new Date(response.data.start_time) : null); // Guardar la hora de inicio o null
       setLoading(false);
@@ -75,6 +79,8 @@ useEffect(() => {
     axios.put(`https://padel-backend-one.vercel.app/api/partidos/${id}`, {
       team1_name: equipo1,
       team2_name: equipo2,
+      team1_id: team1_id,
+      team2_id: team2_id,
       team1_points: updatedPoints.team1,
       team2_points: updatedPoints.team2,
       team1_games: updatedGames.team1,

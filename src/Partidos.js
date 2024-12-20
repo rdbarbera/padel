@@ -13,13 +13,23 @@ function Partidos() {
     team1_id: "",
     team2_id: "",
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [podio, setPodio] = useState([]);
+  const [puntajesTotales, setPuntajesTotales] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchPartidos();
     fetchEquipos();
+    fetchPuntajesTotales();
   }, []);
+
+  useEffect(() => {
+    if (partidos.length > 0 && partidos.every(partido => partido.ganador)) {
+      mostrarPodio();
+    }
+  }, [partidos]);
 
   const fetchPartidos = async () => {
     const res = await axios.get("https://padel-backend-one.vercel.app/api/partidos");
@@ -29,6 +39,11 @@ function Partidos() {
   const fetchEquipos = async () => {
     const res = await axios.get("https://padel-backend-one.vercel.app/api/equipos");
     setEquipos(res.data);
+  };
+
+  const fetchPuntajesTotales = async () => {
+    const res = await axios.get("https://padel-backend-one.vercel.app/api/equipos");
+    setPuntajesTotales(res.data);
   };
 
   const agregarPartido = async () => {
@@ -95,6 +110,18 @@ function Partidos() {
     if (partidoEditado[field] > 0) {
       setPartidoEditado({ ...partidoEditado, [field]: partidoEditado[field] - 1 });
     }
+  };
+
+  const mostrarPodio = () => {
+    const equiposConPuntos = puntajesTotales
+      .sort((a, b) => b.total_puntos - a.total_puntos)
+      .slice(0, 3); // Obtener los 3 primeros puestos
+    setPodio(equiposConPuntos);
+    setModalVisible(true);
+  };
+
+  const cerrarModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -262,6 +289,23 @@ function Partidos() {
           </li>
         ))}
       </ul>
+
+      {/* Modal para mostrar el podio */}
+      {modalVisible && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Podio</h2>
+            <ol>
+              {podio.map((equipo, index) => (
+                <li key={equipo.nombre}>
+                  {index + 1}. {equipo.nombre}: {equipo.total_puntos} puntos
+                </li>
+              ))}
+            </ol>
+            <button onClick={cerrarModal}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

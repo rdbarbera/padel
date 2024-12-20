@@ -34,8 +34,12 @@ useEffect(() => {
         team1: response.data.team1_games,
         team2: response.data.team2_games,
       });
-      setTeam1Id(response.data.team1_id);
-      setTeam2Id(response.data.team2_id);
+      if(response.data.team1_id !== null && response.data.team1_id !== undefined){
+        setTeam1Id(response.data.team1_id);
+      }
+      if(response.data.team2_id !== null && response.data.team2_id !== undefined){
+        setTeam2Id(response.data.team2_id);
+      }
       
       setHistory(response.data.history || []);
       setStartTime(response.data.start_time ? new Date(response.data.start_time) : null); // Guardar la hora de inicio o null

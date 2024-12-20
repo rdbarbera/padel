@@ -277,3 +277,41 @@ button:hover {
   color: #e74c3c;
   margin: 20px 0;
 }
+
+.podio {
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  text-align: center;
+  margin-bottom: 20px;
+  color: black; /* Texto negro */
+}
+
+.podio h2 {
+  font-size: 1.8rem;
+  color: #3498db; /* Color azul para el título */
+  margin-bottom: 15px;
+}
+
+.podio ol {
+  margin: 10px 0;
+  padding: 0;
+  list-style: none; /* Eliminar los puntos de la lista */
+}
+
+.podio li {
+  font-size: 1.2rem;
+  margin: 8px 0;
+  color: black; /* Texto negro */
+}
+
+.podio li strong {
+  color: #e74c3c; /* Rojo para resaltar posiciones */
+}
+
+.podio li span {
+  color: #f1c40f; /* Color dorado para trofeos */
+  font-size: 1.2rem;
+  margin-right: 5px; /* Separar el trofeo del texto */
+}

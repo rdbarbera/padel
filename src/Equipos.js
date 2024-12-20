@@ -41,11 +41,14 @@ function Equipos() {
 
   // Eliminar un equipo
   const eliminarEquipo = async (id) => {
-    try {
-      await axios.delete(`https://padel-backend-one.vercel.app/api/equipos/${id}`);
-      fetchEquipos(); // Actualizar la lista
-    } catch (error) {
-      console.error("Error al eliminar equipo:", error);
+    // Confirmar eliminación
+    if (window.confirm("¿Estás seguro de que deseas eliminar este equipo?")) {
+      try {
+        await axios.delete(`https://padel-backend-one.vercel.app/api/equipos/${id}`);
+        fetchEquipos(); // Actualizar la lista
+      } catch (error) {
+        console.error("Error al eliminar equipo:", error);
+      }
     }
   };
 

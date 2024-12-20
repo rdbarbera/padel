@@ -49,8 +49,11 @@ function Partidos() {
   };
 
   const eliminarPartido = async (id) => {
-    await axios.delete(`https://padel-backend-one.vercel.app/api/partidos/${id}`);
-    fetchPartidos();
+    const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar este partido?");
+    if (confirmacion) {
+      await axios.delete(`https://padel-backend-one.vercel.app/api/partidos/${id}`);
+      fetchPartidos();
+    }
   };
 
   const iniciarEdicion = (partido) => {
